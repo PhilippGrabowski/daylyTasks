@@ -1,9 +1,20 @@
 // Aufgabe A)
-enum Weekday {monday, tuesday, wednesday, thursday, friday, saturday, sunday}
+enum Weekday { monday, tuesday, wednesday, thursday, friday, saturday, sunday }
 
 void main(List<String> args) {
-  Weekday? weekday;
+  printDayMood(Weekday.monday); // Montage und Dienstage sind anstrengend
+  printDayMood(Weekday.tuesday); // Montage und Dienstage sind anstrengend
+  printDayMood(Weekday.wednesday); // Mittwoch und Donnerstag ist ok
+  printDayMood(Weekday.thursday); // Mittwoch und Donnerstag ist ok
+  printDayMood(Weekday.friday); // Freitag ist super
+  printDayMood(Weekday.saturday); // Wochenende ist genial
+  printDayMood(Weekday.sunday); // Wochenende ist genial
 
+  Weekday? weekday;
+  printDayMood(weekday); // Kein Tag ausgewählt
+}
+
+printDayMood(Weekday? weekday) {
   switch (weekday) {
     case Weekday.monday:
     case Weekday.tuesday:
