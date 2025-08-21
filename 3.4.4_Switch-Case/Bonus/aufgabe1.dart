@@ -67,10 +67,10 @@ int calculateCombatStrength(Character fighter, DayTime dayTime, Weather weather)
   int basicCombatStrength = fighter.combatStrength;
 
   Map<String, int> dayTimeCombatStats = getCombatStatsOfCharacter(combatStatsOfDayTime, fighter);
-  int dayTimePowerUp = getPowerUpOfCharacter(dayTimeCombatStats, dayTime.name);
+  int dayTimePowerUp = dayTimeCombatStats[dayTime.name]!;
 
   Map<String, int> weatherCombatStats = getCombatStatsOfCharacter(combatStatsOfWeather, fighter);
-  int weatherPowerUp = getPowerUpOfCharacter(weatherCombatStats, weather.name);
+  int weatherPowerUp = weatherCombatStats[weather.name]!;
 
   return basicCombatStrength + dayTimePowerUp + weatherPowerUp;
 }
@@ -78,11 +78,6 @@ int calculateCombatStrength(Character fighter, DayTime dayTime, Weather weather)
 // Returns combat stats of the character that matches the `typeNumber` of the provided `fighter`.
 Map<String, int> getCombatStatsOfCharacter(List<Map<String, int>> combatStats, Character fighter) {
   return combatStats.firstWhere((stats) => stats['type'] == fighter.typeNumber);
-}
-
-// Returns the value associated with the key `powerUp` in he `combatStat` map
-int getPowerUpOfCharacter(Map<String, int> combatStat, String powerUp) {
-  return combatStat[powerUp]!;
 }
 
 void printResult(Character winner, int winnerCombatStrength, Character loser, int loserCombatStrength) {
