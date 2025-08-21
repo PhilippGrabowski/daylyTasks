@@ -12,6 +12,8 @@ void main(List<String> args) {
 }
 
 void printAvgHeight(String sex,  age) {
+  if (age <= 0) return;
+  
   switch (sex) {
     case 'male':
       switch (age) {
