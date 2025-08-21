@@ -1,0 +1,13 @@
+void main(List<String> args) {
+    List<Map<String, double?>> weatherData = [
+    {'temp': 5.3, 'rain': 0.9, 'wind': null},
+    {'temp': 4.5, 'rain': null, 'wind': 16.8},
+    {'temp': null, 'rain': 3.8, 'wind': null},
+  ];
+
+  double? temp3 = weatherData[2]['temp'] 
+  ?? weatherData[0]['temp'] 
+  ?? ((4.5 >= (weatherData[1]['temp'] ?? 0.0)) ? weatherData[1]['temp'] : weatherData[1]['wind']);
+
+  print(temp3);
+}
