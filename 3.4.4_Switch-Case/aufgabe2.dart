@@ -1,14 +1,14 @@
-List<String> sex = ['male', 'female'];
+enum Sex { male, female }
 
 void main(List<String> args) {
-  printAvgHeight(sex[0], 21); // Im Schnitt 181,4m.
-  printAvgHeight(sex[0], 27); // Im Schnitt 181,3m.
-  printAvgHeight(sex[0], 30); // Im Schnitt 180,4m.
-  printAvgHeight(sex[0], 16); // Keine Durchschnittsgröße bekannt.
-  printAvgHeight(sex[1], 24); // Im Schnitt 167,5m
-  printAvgHeight(sex[1], 25); // Im Schnitt 167,3m
-  printAvgHeight(sex[1], 32); // Im Schnitt 167,2m
-  printAvgHeight(sex[1], 44); // Keine Durchschnittsgröße bekannt.
+  printAvgHeight(Sex.male.name, 21); // Im Schnitt 181,4m.
+  printAvgHeight(Sex.male.name, 27); // Im Schnitt 181,3m.
+  printAvgHeight(Sex.male.name, 30); // Im Schnitt 180,4m.
+  printAvgHeight(Sex.male.name, 16); // Keine Durchschnittsgröße bekannt.
+  printAvgHeight(Sex.female.name, 24); // Im Schnitt 167,5m
+  printAvgHeight(Sex.female.name, 25); // Im Schnitt 167,3m
+  printAvgHeight(Sex.female.name, 32); // Im Schnitt 167,2m
+  printAvgHeight(Sex.female.name, 44); // Keine Durchschnittsgröße bekannt.
 }
 
 void printAvgHeight(String sex,  age) {
