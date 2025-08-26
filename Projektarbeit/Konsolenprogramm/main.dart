@@ -2,10 +2,11 @@ import 'dart:io';
 
 const List<double> priceList = [0.01, 0.5, 1, 5, 10, 50, 100, 500, 1000, 2500, 5000, 10000, 15000, 25000, 50000, 100000];
 final List<double> lostPrices = [];
-late final Map<int, double> selectedSuitcase;
+Map<int, double>? selectedSuitcase;
 int round = 0;
-String? offer;
+String offer = '';
 bool deal = false;
+bool gameOver = false;
 
 
 void main(List<String> args) {
@@ -18,7 +19,9 @@ void startGame(){
   printGameDescription();
   selectYourSuitcase(suitcases);
   removeSuitcasesPerRound(suitcases);
+  gameOver = true;
   printResult();
+  restartGame();
 }
 
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Select Your Suitcase >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -104,7 +107,25 @@ bool checkEnteredDecision(String decision) {
 }
 
 bool invalidDecision(String decision) {
+  // if (gameOver) {
+  //   return 
+  // }
   return decision == '' && decision.trim().toLowerCase() != 'deal' && decision.trim().toLowerCase() != 'no deal';
+}
+
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Restart Game >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+void restartGame() {
+  printRestartQuery();
+  final String decision = enterDecision();
+  if (decision == 'ende') print('Ende');
+  if (decision == 'restart') {
+    lostPrices.clear();
+    selectedSuitcase = null;
+    round = 0;
+    offer = '';
+    deal = false;
+    startGame();
+  }
 }
 
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Print Functions >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -148,7 +169,7 @@ void printAvailablePrices(Map<int, double> suitcases) {
 
 void printSelectedSuitcase() {
   addBlankLine();
-  final int suitcaseNumber = selectedSuitcase.keys.toList()[0];
+  final int suitcaseNumber = selectedSuitcase!.keys.toList()[0];
   print('|${getSuitcaseNumber(suitcaseNumber)}|');
   addBlankLine();
 }
@@ -175,11 +196,16 @@ void printOffer(Map<int, double> suitcases) {
 
 void printResult() {
   addBlankLine();
-  final double price = selectedSuitcase.values.toList()[0];
+  final double price = selectedSuitcase!.values.toList()[0];
   deal ? print('Du hast das Angebot von $offer angenommen, Glückwunsch!\nLass uns sehen ob du einen guten Deal gemacht hast.') 
   : print('Du hast jedes Angebot abgelehnt. Schauen wir, was in deinem Koffer steckt.');
   printSelectedSuitcase();
   print('In deinem Koffer ${deal ? 'waren' : 'sind'} ${transformToString(price)}!');
+}
+
+void printRestartQuery() {
+  addBlankLine();
+  print('Möchtest du das Spiel neu starten? Gebe \"Restart\" ein neues Spiel zu beginnen und \"Ende\" um das Spiel zu beenden.');
 }
 
 void addBlankLine() {
