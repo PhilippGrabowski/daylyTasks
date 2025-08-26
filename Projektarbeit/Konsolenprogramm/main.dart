@@ -48,7 +48,8 @@ int enterSuitcaseNumber(Map<int, double> suitcases) {
 
 bool checkEnteredSuitcaseNumber(int? number, Map<int, double> suitcases) {
   if (!invalidSuitcaseNumber(number, suitcases)) return false;
-  print('Ungültige Eingabe!');
+  addBlankLine();
+  print('Ungültige Eingabe! Wähle eine Kofferzahl aus den verfügbaren Koffern!');
   return true;
 }
 
@@ -102,22 +103,23 @@ String enterDecision() {
 
 bool checkEnteredDecision(String decision) {
   if (!invalidDecision(decision)) return false;
-  print('Gebe \"Deal\" oder \"No Deal\" ein!');
+  gameOver ? print('Gebe \"Restart\" oder \"End\" ein!') : print('Gebe \"Deal\" oder \"No Deal\" ein!');
   return true;
 }
 
 bool invalidDecision(String decision) {
-  // if (gameOver) {
-  //   return 
-  // }
-  return decision == '' && decision.trim().toLowerCase() != 'deal' && decision.trim().toLowerCase() != 'no deal';
+  if (gameOver) {
+    return decision == '' || decision.trim().toLowerCase() != 'restart' && decision.trim().toLowerCase() != 'end';
+  } else {
+    return decision == '' || decision.trim().toLowerCase() != 'deal' && decision.trim().toLowerCase() != 'no deal';
+  }
 }
 
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Restart Game >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 void restartGame() {
   printRestartQuery();
   final String decision = enterDecision();
-  if (decision == 'ende') print('Ende');
+  if (decision == 'end') print('Ende');
   if (decision == 'restart') {
     lostPrices.clear();
     selectedSuitcase = null;
@@ -236,7 +238,7 @@ String atomicNumber(int loop) {
 
 void calculateOffer() {
   final List<double> availablePrices = getAvailablePrices();
-  final double avg = (availablePrices.reduce((a, b) => a + b)) / availablePrices.length;
+  final int avg = (availablePrices.reduce((a, b) => a + b)) ~/ availablePrices.length;
   final double roundOffer = avg * roundFactor();
   offer = transformToString(roundOffer);
 }
