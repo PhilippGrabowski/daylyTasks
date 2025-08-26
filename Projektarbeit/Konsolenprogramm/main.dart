@@ -1,5 +1,7 @@
 import 'dart:io';
+import 'map.dart';
 
+WordToNumber wtn = WordToNumber();
 const List<double> priceList = [0.01, 0.5, 1, 5, 10, 50, 100, 500, 1000, 2500, 5000, 10000, 15000, 25000, 50000, 100000];
 final List<double> lostPrices = [];
 Map<int, double>? selectedSuitcase;
@@ -40,7 +42,7 @@ int enterSuitcaseNumber(Map<int, double> suitcases) {
   int? number;
   while(invalidInput) {
     final String enteredSuitcaseNumber = stdin.readLineSync() ?? '';
-    number = int.tryParse(enteredSuitcaseNumber);
+    number = parseStringNumber(enteredSuitcaseNumber);
     invalidInput = checkEnteredSuitcaseNumber(number, suitcases);
   }
   return number!;
@@ -221,6 +223,13 @@ Map<int, double> generateRandomSuitcases(List<double> priceList) {
     suitcases[i+1] = priceList[i];
   }
   return suitcases;
+}
+
+int? parseStringNumber(String enteredSuitcaseNumber) {
+  if (int.tryParse(enteredSuitcaseNumber) != null) return int.parse(enteredSuitcaseNumber);
+  enteredSuitcaseNumber.toLowerCase();
+  if (wtn.words.contains(enteredSuitcaseNumber)) return wtn.getNumber(enteredSuitcaseNumber);
+  return null;
 }
 
 String atomicNumber(int loop) {
