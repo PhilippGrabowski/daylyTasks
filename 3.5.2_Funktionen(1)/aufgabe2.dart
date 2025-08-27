@@ -6,7 +6,9 @@ const List<String> textExamples = [
 
 void main(List<String> args) {
   for (int i = 2; i >= 0; i--) {
-    print(textExamples[i]);
+    for (int j = 0; j < 3; j++) {
+      print(textExamples[i]);
+    }
   }
 }
 
