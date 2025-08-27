@@ -227,8 +227,7 @@ Map<int, double> generateRandomSuitcases(List<double> priceList) {
 
 int? parseStringNumber(String enteredSuitcaseNumber) {
   if (int.tryParse(enteredSuitcaseNumber) != null) return int.parse(enteredSuitcaseNumber);
-  enteredSuitcaseNumber.toLowerCase();
-  if (wtn.words.contains(enteredSuitcaseNumber)) return wtn.getNumber(enteredSuitcaseNumber);
+  if (wtn.words.contains(enteredSuitcaseNumber.toLowerCase())) return wtn.getNumber(enteredSuitcaseNumber.toLowerCase());
   return null;
 }
 
