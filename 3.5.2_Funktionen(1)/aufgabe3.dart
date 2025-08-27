@@ -9,7 +9,8 @@ void main(List<String> args) {
 }
 
 void reverseInitials(String firstName, String lastName) {
-  String initialFirstName = firstName[firstName.length - 1].toUpperCase() + '.';
-  String initialLastName = lastName[lastName.length -1].toUpperCase() + '.';
+  if(firstName.trim().isEmpty || lastName.trim().isEmpty) return;
+  String initialFirstName = firstName.trim()[firstName.length - 1].toUpperCase() + '.';
+  String initialLastName = lastName.trim()[lastName.length -1].toUpperCase() + '.';
   print((initialLastName + ' ' + initialFirstName)); 
 }

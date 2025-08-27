@@ -11,5 +11,5 @@ void main(List<String> args) {
 }
 
 void triplePrint(String text) {
-  print(text);
+  print(text.trim());
 }
