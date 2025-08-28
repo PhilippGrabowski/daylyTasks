@@ -13,7 +13,6 @@ void main(List<String> args) {
 }
 
 void findAndPrintExtreme(List<int> numbers) {
-  if (numbers.isEmpty) return;
   final List<int> copyNumbers = List.from(numbers);
   copyNumbers.sort();
   final int min = copyNumbers[0];
@@ -32,7 +31,6 @@ void findAndPrintExtreme(List<int> numbers) {
 }
 
 void printNumberTypes(List<int> numbers) {
-  if (numbers.isEmpty) return;
   final List<int> oddNumbers = numbers.where((number) => number % 2 != 0).toList();
   final List<int> evenNumbers = numbers.where((number) => number % 2 == 0).toList();
   final List<int> positiveNumbers = numbers.where((number) => number >= 0).toList();
@@ -45,7 +43,6 @@ void printNumberTypes(List<int> numbers) {
 }
 
 void printDistribution(List<int> numbers) {
-  if (numbers.isEmpty) return;
   final Set<dynamic> set = List.from(numbers).toSet();
   final Map<int, int> amount = {};
   for (int number in set) {
