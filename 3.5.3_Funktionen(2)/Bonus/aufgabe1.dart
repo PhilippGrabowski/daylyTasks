@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'dart:io';
 
 void main(List<String> args) {
   List<List<int>> randomNumList = generateListOfRandomNumLists(3);
