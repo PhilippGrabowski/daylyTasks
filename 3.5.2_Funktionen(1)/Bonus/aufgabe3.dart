@@ -56,6 +56,10 @@ void printDistribution(List<int> numbers) {
 }
 
 void analyzeNumbers(List<int> numbers) {
+  if (numbers.isEmpty) {
+  print('Keine Zahlen in der Liste.');
+  return;
+  }
   findAndPrintExtreme(numbers);
   printNumberTypes(numbers);
   printDistribution(numbers);
