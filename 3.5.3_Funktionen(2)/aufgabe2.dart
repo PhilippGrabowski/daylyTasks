@@ -8,6 +8,5 @@ void main(List<String> args) {
 }
 
 int characterAmountOfString(String text) {
-  if (text.trim() == 0) return 0;
-  return text.length;
+  return text.trim().length;
 }
