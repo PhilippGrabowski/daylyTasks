@@ -16,7 +16,7 @@ void main(List<String> args) {
 
 void startToDo() {
   welcomeUser();
-  showMenu();
+  showActions();
   editToDoList();
 }
 
@@ -26,7 +26,7 @@ void welcomeUser() {
   addBlankLine();
 }
 
-void showMenu() {
+void showActions() {
   for(String action in actions) {
     print(action);
   }
