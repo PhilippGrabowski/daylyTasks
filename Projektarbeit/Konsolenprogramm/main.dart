@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'map.dart';
 
-WordToNumber wtn = WordToNumber();
+final WordToNumber wtn = WordToNumber();
 const List<double> priceList = [0.01, 0.5, 1, 5, 10, 50, 100, 500, 1000, 2500, 5000, 10000, 15000, 25000, 50000, 100000];
 final List<double> lostPrices = [];
 Map<int, double>? selectedSuitcase;
@@ -15,13 +15,12 @@ void main(List<String> args) {
   startGame();
 }
 
-void startGame(){
+void startGame() {
   final List<double> randomSortedPriceList = List.from(priceList)..shuffle();
   final Map<int, double> suitcases = generateRandomSuitcases(randomSortedPriceList);
   printGameDescription();
   selectYourSuitcase(suitcases);
   removeSuitcasesPerRound(suitcases);
-  gameOver = true;
   printResult();
   restartGame();
 }
@@ -55,17 +54,12 @@ bool checkEnteredSuitcaseNumber(int? number, Map<int, double> suitcases) {
   return true;
 }
 
-bool invalidSuitcaseNumber(int? number, Map<int, double> suitcases) {
-  return number == null || notAvailableSuitcaseNumber(number) || suitcaseWasRemoved(number, suitcases);
-}
+bool invalidSuitcaseNumber(int? number, Map<int, double> suitcases) =>
+  number == null || notAvailableSuitcaseNumber(number) || suitcaseWasRemoved(number, suitcases);
 
-bool notAvailableSuitcaseNumber(int number) {
-  return number < 1 || number > priceList.length;
-}
+bool notAvailableSuitcaseNumber(int number) => number < 1 || number > priceList.length;
 
-bool suitcaseWasRemoved(int number, Map<int, double> suitcases) {
-  return suitcases[number] == 0;
-}
+bool suitcaseWasRemoved(int number, Map<int, double> suitcases) => suitcases[number] == 0;
 
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Remove Suitcases >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 void removeSuitcasesPerRound(Map<int, double> suitcases) {
@@ -109,16 +103,14 @@ bool checkEnteredDecision(String decision) {
   return true;
 }
 
-bool invalidDecision(String decision) {
-  if (gameOver) {
-    return decision == '' || decision.trim().toLowerCase() != 'restart' && decision.trim().toLowerCase() != 'end';
-  } else {
-    return decision == '' || decision.trim().toLowerCase() != 'deal' && decision.trim().toLowerCase() != 'no deal';
-  }
-}
+bool invalidDecision(String decision) => 
+  gameOver ? decision == '' || decision.trim().toLowerCase() != 'restart' && decision.trim().toLowerCase() != 'end'
+  : decision == '' || decision.trim().toLowerCase() != 'deal' && decision.trim().toLowerCase() != 'no deal';
+
 
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Restart Game >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 void restartGame() {
+  gameOver = true;
   printRestartQuery();
   final String decision = enterDecision();
   if (decision == 'end') print('Ende');
@@ -145,23 +137,13 @@ void printOverview(Map<int, double> suitcases) {
 
 void printAvailableSuitcases(Map<int, double> suitcases) {
   addBlankLine();
-  suitcases.forEach((key, value) {
-    if (key % 4 == 0) {
-      printSuitcaseNextLine(key, value);
-    } else {
-      printSuitcaseInline(key, value);
-    }
-  });
+  suitcases.forEach((key, value) => key % 4 == 0 ? printSuitcaseNextLine(key, value) : printSuitcaseInline(key, value));
   addBlankLine();
 }
 
-void printSuitcaseNextLine(int suitcaseNumber, double price) {
-  print('${price != 0 ? '|${getSuitcaseNumber(suitcaseNumber)}| ' : '____ '}');
-}
+void printSuitcaseNextLine(int suitcaseNumber, double price) => print('${price != 0 ? '|${getSuitcaseNumber(suitcaseNumber)}| ' : '____ '}');
 
-void printSuitcaseInline(int suitcaseNumber, double price) {
-  stdout.write('${price != 0 ? '|${getSuitcaseNumber(suitcaseNumber)}| ' : '____ '}');
-}
+void printSuitcaseInline(int suitcaseNumber, double price) => stdout.write('${price != 0 ? '|${getSuitcaseNumber(suitcaseNumber)}| ' : '____ '}');
 
 void printAvailablePrices(Map<int, double> suitcases) {
   addBlankLine();
@@ -212,9 +194,7 @@ void printRestartQuery() {
   print('Möchtest du das Spiel neu starten? Gebe \"Restart\" ein neues Spiel zu beginnen und \"Ende\" um das Spiel zu beenden.');
 }
 
-void addBlankLine() {
-  print(' ');
-}
+void addBlankLine() => print(' ');
 
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< General Functions >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 Map<int, double> generateRandomSuitcases(List<double> priceList) {
@@ -271,13 +251,7 @@ List<String> transformToStringList(List<double> priceList) {
   return transformedStringList;
 }
 
-String transformToString(double price) {
-  if (price >= 1) {
-    return'${price.ceil().toString()}€';
-  } else {
-    return '${price.toStringAsFixed(2)}€';
-  }
-}
+String transformToString(double price) => price >= 1 ? '${price.ceil().toString()}€' : '${price.toStringAsFixed(2)}€';
 
 List<double> getAvailablePrices() {
   final List<double> copyPriceList = List.from(priceList);
@@ -285,6 +259,4 @@ List<double> getAvailablePrices() {
   return copyPriceList;
 }
 
-String getSuitcaseNumber(int suitcaseNumber) {
-  return suitcaseNumber.toString().padLeft(2, '0');
-}
+String getSuitcaseNumber(int suitcaseNumber) => suitcaseNumber.toString().padLeft(2, '0');

@@ -22,7 +22,7 @@ class WordToNumber {
     return mapNumbers.keys.toList();
   }
 
-  int? getNumber(String key) {
-    return mapNumbers[key];
+  int getNumber(String key) {
+    return mapNumbers[key]!;
   }
 }
