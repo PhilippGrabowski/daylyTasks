@@ -38,12 +38,11 @@ void executeNextAction(String input) {
   } else {
     print('Ungültige Eingabe!b Try again.');
   }
-
 }
 
 void addTask(String input) {
   if (getLength(trimString(input)) < 6) return;
-  String taskDescription = getSubstring(trimString(input), 4);
+  String taskDescription = trimString(getSubstring(trimString(input), 4));
   toDos.add(taskDescription);
   toDoStatus[getLength(null, toDos)] = false;
   print('Aufgabe hinzugefügt: $taskDescription');
@@ -92,7 +91,7 @@ String trimString(String text) {
     } else {
       firstChar ? () : firstChar = true;
       chars.add(text[i]); 
-    };
+    }
   }
 
   List<String> chars2 = [];
@@ -103,7 +102,7 @@ String trimString(String text) {
     } else {
       firstChar ? () : firstChar = true;
       chars2.insert(0, chars[i]); 
-    };
+    }
   }
   String trimString = '';
   chars.forEach((char) => trimString = trimString + char);
