@@ -1,5 +1,11 @@
 import 'dart:io';
 
+List<String> actions = [
+  '- Aufgaben hinzufügen (add <beschreibung>)',
+  '- Aufgaben anzeigen (list)',
+  '- Aufgaben hinzufügen (done <nummer>)',
+  '- Das Programm beenden (exit)'
+];
 bool editToDos = true;
 final List<String> toDos = [];
 final Map<int, bool> toDoStatus = {};
@@ -10,76 +16,108 @@ void main(List<String> args) {
 
 void startToDo() {
   welcomeUser();
-  while (editToDos) {
-    showMenu();
-    String input = stdin.readLineSync() ?? '';
-    executeNextAction(input);
-  }
-  print('Tschüss!');
+  showMenu();
+  editToDoList();
 }
-
-void showMenu() {
-  print('- Aufgaben hinzufügen (add <beschreibung>)');
-  print('- Aufgaben anzeigen (list)');
-  print('- Aufgaben hinzufügen (done <nummer>)');
-  print('- Das Programm beenden (exit)');
-  addBlankLine();
-}
-
-void executeNextAction(String input) {
-  if (trimString(input) == 'exit') {
-    exitProgram();
-  } else if (getSubstring(trimString(input), 0, 3) == 'add') {
-    addTask(input);
-  } else if (trimString(input) == 'list') {
-    showTaskList();
-  } else if (getSubstring(trimString(input), 0, 4) == 'done') {
-    markTaskAsComplete(input);
-  } else {
-    print('Ungültige Eingabe! Try again.');
-  }
-}
-
-void addTask(String input) {
-  if (getLength(trimString(input)) < 6) return;
-  String taskDescription = trimString(getSubstring(trimString(input), 4));
-  toDos.add(taskDescription);
-  toDoStatus[getLength(null, toDos)] = false;
-  print('Aufgabe hinzugefügt: $taskDescription');
-  addBlankLine();
-}
-
-void markTaskAsComplete(String input) {
-  if (getLength(trimString(input)) < 6) return;
-  String taskNumber = getSubstring(trimString(input), 5);
-  int? number = int.tryParse(taskNumber);
-  if (number == null || getLength(null, toDos) < number || number < 0) return;
-  toDoStatus[number] = true;
-  print('Abgehakt: $number: ${toDos[number - 1]}');
-  addBlankLine();
-}
-
-void showTaskList() {
-  if (getLength(null, toDos) == 0) {
-    print('Keine ToDo\'s in der Liste');
-  }
-  for (int i = 0; i < getLength(null, toDos); i++) {
-    print(
-      '[${toDoStatus[i + 1] == true ? 'x' : ' '}] ${getLength(null, toDos)}. ${toDos[i]}',
-    );
-  }
-  addBlankLine();
-}
-
-void exitProgram() => editToDos = false;
-
-void addBlankLine() => print(' ');
 
 void welcomeUser() {
   addBlankLine();
   print('Willkommen bei deiner ToDo-Liste. Bearbeite deine ToDo\'s');
   addBlankLine();
 }
+
+void showMenu() {
+  for(String action in actions) {
+    print(action);
+  }
+  addBlankLine();
+}
+
+void editToDoList() {
+  while (editToDos) {
+    String input = stdin.readLineSync() ?? '';
+    executeNextAction(input);
+  }
+  print('Tschüss!');
+}
+
+void executeNextAction(String input) {
+  if (inputWasExit(input)) {
+    exitProgram();
+  } else if (inputWasAdd(input)) {
+    addToDo(input);
+  } else if (inputWasList(input)) {
+    showToDoList();
+  } else if (inputWasDone(input)) {
+    markToDoAsComplete(input);
+  } else {
+    print('Ungültige Eingabe! Try again.');
+  }
+}
+
+void addToDo(String input) {
+  String toDo = trimString(getSubstring(trimString(input), 4));
+  if (inputIsEmpty(toDo)) {
+    print('Ungültige Eingabe! Try again.');
+    return;
+  } else {
+    addToList(toDo);
+  }
+}
+
+void addToList(String toDo) {
+  toDos.add(toDo);
+  toDoStatus[getLength(null, toDos)] = false;
+  print('Aufgabe hinzugefügt: $toDo');
+  addBlankLine();
+}
+
+void markToDoAsComplete(String input) {
+  String toDoNumber = getSubstring(trimString(input), 5);
+  int? number = int.tryParse(toDoNumber);
+  if (inputIsEmpty(toDoNumber) || inputWasNotAValidNumber(number)) {
+    print('Ungültige Eingabe! Try again.');
+    return;
+  } else {
+    changeToDoStatus(number!);
+  }
+}
+
+void changeToDoStatus(int number) {
+  toDoStatus[number] = true;
+  print('Abgehakt: $number: ${toDos[number - 1]}');
+  addBlankLine();
+}
+
+void showToDoList() {
+  if (listIsEmpty()) {
+    print('Keine ToDo\'s in der Liste');
+  }
+  for (int i = 0; i < getLength(null, toDos); i++) {
+    print('[${toDoStatus[i + 1] == true ? 'x' : ' '}] ${getLength(null, toDos)}. ${toDos[i]}');
+  }
+  addBlankLine();
+}
+
+void exitProgram() => editToDos = false;
+
+bool inputWasExit(String input) => trimString(input) == 'exit';
+
+bool inputWasAdd(String input) => getSubstring(trimString(input), 0, 3) == 'add';
+
+bool inputWasList(String input) => trimString(input) == 'list';
+
+bool inputWasDone(String input) => getSubstring(trimString(input), 0, 4) == 'done';
+
+bool inputIsEmpty(String input) => getLength(input) == 0;
+
+bool inputWasNotAValidNumber(int? number) => number == null || getLength(null, toDos) < number || number < 0;
+
+bool listIsEmpty() => getLength(null, toDos) == 0;
+
+void addBlankLine() => print(' ');
+
+
 
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< String Funktionen >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>><
 String trimString(String text) {
