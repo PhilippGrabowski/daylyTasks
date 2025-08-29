@@ -36,7 +36,7 @@ void executeNextAction(String input) {
   } else if (getSubstring(trimString(input), 0, 4) == 'done') {
     markTaskAsComplete(input);
   } else {
-    print('Ungültige Eingabe!b Try again.');
+    print('Ungültige Eingabe! Try again.');
   }
 }
 
