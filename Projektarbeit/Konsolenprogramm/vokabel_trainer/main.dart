@@ -175,8 +175,8 @@ void printInstruction([int? counter]) {
 }
 
 void showQuizResult() {
-  int rightAnswers = quizAnswers.where((answer) => answer == true).toList().length;
-  int percent = (100 / quizAnswers.length * rightAnswers).ceil();
+  final int rightAnswers = quizAnswers.where((answer) => answer == true).toList().length;
+  final int percent = (100 / quizAnswers.length * rightAnswers).ceil();
   addBlankLine();
   print('Du hast $rightAnswers von ${quizAnswers.length} Vokabeln richtig übersetzt. Das sind $percent%');
   quizAnswers.clear();
