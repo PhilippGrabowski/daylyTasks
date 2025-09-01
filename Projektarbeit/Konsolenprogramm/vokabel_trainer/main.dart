@@ -55,10 +55,17 @@ void addVocabulary() {
 
 void saveVocabulary(String input) {
   final List<String> memorizedVokabulary = input.split('-');
+  if (vocabularyExists(memorizedVokabulary)) {
+    addBlankLine();
+    print('Dieser Eintag wurde schon gespeichert');
+    return;
+  }
   vocabulary[memorizedVokabulary[0].trim()] = memorizedVokabulary[1].trim();
   addBlankLine();
   print('Es wurde ein neuer Eintrag: ${memorizedVokabulary[0].trim()} - ${memorizedVokabulary[1].trim()} hinzugefügt.');
 }
+
+bool vocabularyExists(List<String> memorizedVokabulary) => vocabulary.keys.toList().contains(memorizedVokabulary[0].trim());
 
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Add Vocabulary Functions >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 void openVocabularyQuiz() {
