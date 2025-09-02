@@ -1,10 +1,17 @@
+enum RideRequestStatus {
+  open,
+  rejected,
+  confirmed
+}
+
 // Fahrtanfrage
 class RideRequest {
   String? id; // wird später durch Firebase automatisch generiert
-  TransportServiceProvider transportServiceProvider;
-  DateTime pickupDate;
-  Address pickupAddress;
-  List<Address> route;
+  final TransportServiceProvider transportServiceProvider;
+  final DateTime pickupDate;
+  final Address pickupAddress;
+  final List<Address> route;
+  final RideRequestStatus status = RideRequestStatus.open;
 
   RideRequest({
     this.id,
@@ -18,9 +25,9 @@ class RideRequest {
 // Transportdienstleister
 class TransportServiceProvider {
   String? id; // wird später durch Firebase automatisch generiert
-  String name;
-  Address address;
-  String phone;
+  final String name;
+  final Address address;
+  final String phone;
   double? rating;
 
   TransportServiceProvider({
@@ -35,11 +42,11 @@ class TransportServiceProvider {
 // Adresse
 class Address {
   String? id; // wird später durch Firebase automatisch generiert
-  String streetName;
-  String houseNumber;
-  String postalCode;
-  String city;
-  String country;
+  final String streetName;
+  final String houseNumber;
+  final String postalCode;
+  final String city;
+  final String country;
   double? latitude; // Breitengrad
   double? longitude; // Längengrad
 
