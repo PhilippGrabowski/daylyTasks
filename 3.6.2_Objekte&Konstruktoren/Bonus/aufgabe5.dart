@@ -12,7 +12,7 @@ class Rectangle {
     return this.width * this.height;
   }
 
-  scale(double factor) {
+  void scale(double factor) {
     this.width *= factor;
     this.height *= factor;
   }
