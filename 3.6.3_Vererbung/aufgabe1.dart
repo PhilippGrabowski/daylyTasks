@@ -20,9 +20,7 @@ class Hammer extends Tool {
   final HeadSize headSize;
   late final int hammerBlowAmount;
 
-  Hammer({required this.headSize, required super.weight, required super.manufacturer, super.isElectric});
-
-  void setBlowAmount() {
+  Hammer({required this.headSize, required super.weight, required super.manufacturer, super.isElectric}) {
     switch (headSize) {
       case HeadSize.small:
         hammerBlowAmount = 8;
@@ -40,30 +38,23 @@ class Hammer extends Tool {
 
 class Saw extends Tool {
   final double bladeLength;
-  int? batteryStatus;
+  double? batteryStatus;
 
 
-  Saw(this.bladeLength, {required super.weight, required super.manufacturer, super.isElectric});
+  Saw(this.bladeLength, {required super.weight, required super.manufacturer, super.isElectric}) {
+    batteryStatus = super.isElectric == false ? null : 100;
+  }
 
-  getBatteryStatus(int numberOfUse) {
-    if (isElectric == false) {
-      print('Säge ist nicht elektrisch!');
-      return;
-    } else if (numberOfUse > 0 && numberOfUse <= 5) {
-      batteryStatus = 100 - numberOfUse * 3;
-      print('Die Batterie liegt bei $batteryStatus%');
-    } else if (numberOfUse > 0 && numberOfUse > 5 && numberOfUse < 10) {
-      batteryStatus = 100 - numberOfUse * 5;
-      print('Die Batterie liegt bei $batteryStatus%');
-    } else if (numberOfUse > 0 && numberOfUse < 15) {
-      batteryStatus = 25;
-      print('Die Batterie liegt bei $batteryStatus%');
-    } else if (numberOfUse > 0 && numberOfUse > 15) {
-      batteryStatus = 0;
-      print('Die Batterie ist leer!');
-    } else {
-      ();
-    }
+  useSaw([int numberOfUse = 1]) {
+    if (batteryStatus == null) return;
+    batteryStatus = batteryStatus! - (numberOfUse * 10).ceil();
+    if (batteryStatus! < 0) batteryStatus = 0;
+  }
+
+  void printBatteryStatus() {
+    batteryStatus == null
+    ? print('Die Säge ist nicht elekktrisch und hat keinen Akku.')
+    : print('Der Akku liegt bei $batteryStatus%.');
   }
 }
 
@@ -71,8 +62,11 @@ void main(List<String> args) {
   Saw saw = Saw(80, manufacturer: 'Siemens', weight: 2.0, isElectric: true);
   Hammer hammer = Hammer(headSize: HeadSize.medium, weight: 5.0, manufacturer: 'Bosch');
 
-  hammer.setBlowAmount();
   hammer.printUse();
+
   saw.printToolType();
-  saw.getBatteryStatus(14);
+  saw.useSaw();
+  saw.printBatteryStatus();
+  saw.useSaw(3);
+  saw.printBatteryStatus();
 }
