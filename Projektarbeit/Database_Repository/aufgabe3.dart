@@ -6,6 +6,7 @@ class RideRequestDatabaseRepository implements DatabaseRepository {
 
   @override
   create(rideRequest) {
+    if (rideRequest is! RideRequest) return;
     rideRequests.add(rideRequest);
   }
 
@@ -16,6 +17,7 @@ class RideRequestDatabaseRepository implements DatabaseRepository {
 
   @override
   update(rideRequest) {
+    if (rideRequest is! RideRequest) return;
     int index = rideRequests.indexWhere((e) => e.id == rideRequest.id);
     if (index == -1) return;
     rideRequests[index] = rideRequest;
