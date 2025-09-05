@@ -40,7 +40,6 @@ class Saw extends Tool {
   final double bladeLength;
   double? batteryStatus;
 
-
   Saw(this.bladeLength, {required super.weight, required super.manufacturer, super.isElectric}) {
     batteryStatus = super.isElectric == false ? null : 100;
   }
