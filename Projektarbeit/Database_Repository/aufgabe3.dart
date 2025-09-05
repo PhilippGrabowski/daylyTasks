@@ -17,6 +17,7 @@ class RideRequestDatabaseRepository implements DatabaseRepository {
   @override
   update(rideRequest) {
     int index = rideRequests.indexWhere((e) => e.id == rideRequest.id);
+    if (index == -1) return;
     rideRequests[index] = rideRequest;
   }
 

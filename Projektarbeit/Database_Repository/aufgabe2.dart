@@ -4,4 +4,3 @@ abstract class DatabaseRepository {
   update(var object);
   delete(String id);
 }
-
