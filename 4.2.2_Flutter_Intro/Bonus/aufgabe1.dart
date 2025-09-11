@@ -25,9 +25,9 @@ class Column extends Widget {
 }
 
 class Text extends Widget {
-  String text;
+  String data;
 
-  Text(this.text);
+  Text(this.data);
 }
 
 void main(List<String> args) {
