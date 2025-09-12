@@ -34,7 +34,7 @@ class Header extends StatelessWidget {
   Header({super.key, required this.index});
 
   final int index;
-  final List<FontWeight> weights = [FontWeight.w600, FontWeight.w800];
+  final List<FontWeight> weights = [FontWeight.w800, FontWeight.w900];
 
   @override
   Widget build(BuildContext context) {
